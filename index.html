@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathKids - Belajar Matematika Kelas 1 SD</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; color: #333; }
+.hidden { display: none !important; }
+
+/* LOGIN */
+.login-wrap { display: flex; justify-content: center; align-items: center; min-height: 90vh; }
+.login-card { background: #fff; border-radius: 24px; padding: 40px; width: 100%; max-width: 440px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3); animation: pop 0.45s ease-out; }
+@keyframes pop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.login-card h1 { text-align: center; font-size: 38px; margin-bottom: 6px; color: #222; }
+.login-card p { text-align: center; color: #777; margin-bottom: 22px; font-size: 14px; }
+.login-card input { width: 100%; padding: 14px 18px; margin: 8px 0; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px; transition: 0.2s; }
+.login-card input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15); }
+.login-card button.login-btn { width: 100%; padding: 14px; margin-top: 14px; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.login-card button.login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4); }
+.err { color: #ef4444; text-align: center; font-size: 13px; margin-top: 10px; min-height: 18px; font-weight: 600; }
+.hint { background: #f0f4ff; border: 1px dashed #667eea; border-radius: 12px; padding: 14px; margin-top: 18px; font-size: 12.5px; color: #4338ca; line-height: 1.6; }
+.hint-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip { background: #fff; border: 1px solid #c7d2fe; padding: 4px 10px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 12px; transition: 0.2s; }
+.chip:hover { background: #e0e7ff; }
+
+/* HEADER & CONTAINER */
+.container { max-width: 1150px; margin: 0 auto; }
+header { background: #fff; border-radius: 18px; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+header h1 { font-size: 22px; color: #222; }
+header h1 span { font-size: 13px; color: #777; display: block; font-weight: 400; margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.user-badge { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; padding: 8px 16px; border-radius: 20px; font-size: 13.5px; font-weight: 600; }
+.logout-btn { background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+.logout-btn:hover { background: #dc2626; }
+
+/* PANEL CEPAT KHUSUS GURU DI ATAS */
+.guru-bar { background: #fff; border-radius: 16px; padding: 16px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); border-left: 6px solid #10b981; }
+.guru-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.stat-pill { background: #f3f4f6; padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; color: #374151; }
+.stat-pill span { color: #667eea; font-size: 15px; font-weight: 800; }
+
+/* TABS GRID RAPI */
+.tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.tab { background: rgba(255, 255, 255, 0.88); border: none; padding: 13px 14px; border-radius: 14px; font-weight: 700; cursor: pointer; font-size: 13.5px; color: #4b5563; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 7px; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+.tab.active { background: #fff; color: #667eea; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16); transform: translateY(-2px); border-bottom: 3px solid #667eea; }
+.tab:hover { background: #fff; color: #667eea; }
+
+/* CONTENT & CARDS */
+.card { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 18px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
+.card h2 { color: #222; margin-bottom: 10px; font-size: 20px; }
+.card p { color: #555; line-height: 1.7; margin-bottom: 10px; }
+
+/* MATERI GRID */
+.materi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.materi-card { background: #fff; border-radius: 18px; padding: 20px; cursor: pointer; transition: 0.25s; border-left: 6px solid #667eea; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); display: flex; flex-direction: column; justify-content: space-between; }
+.materi-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); }
+.materi-card .icon { font-size: 36px; margin-bottom: 8px; }
+.materi-card .bab { font-size: 12px; font-weight: 800; color: #667eea; text-transform: uppercase; letter-spacing: 0.8px; }
+.materi-card h3 { font-size: 16.5px; margin: 6px 0; color: #222; }
+.materi-card p { font-size: 13px; color: #777; line-height: 1.5; }
+
+/* MATERI DETAIL */
+.materi-detail h3 { color: #667eea; margin: 20px 0 10px; font-size: 18px; }
+.materi-detail p { line-height: 1.8; margin-bottom: 10px; color: #444; }
+.materi-detail ul, .materi-detail ol { margin: 10px 0 15px 24px; line-height: 1.9; color: #444; }
+.angka-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
+.angka-card { background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 12px; padding: 12px; text-align: center; }
+.angka-card span { font-size: 28px; font-weight: 800; color: #667eea; display: block; }
+.angka-card p { font-size: 11px; color: #666; text-transform: uppercase; margin: 2px 0; }
+.simbol-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.simbol-box div { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 16px; text-align: center; color: #065f46; }
+.simbol-box strong { font-size: 22px; display: block; margin-bottom: 6px; color: #10b981; }
+.posisi-box p { background: #ecfeff; border-left: 4px solid #06b6d4; padding: 10px 14px; border-radius: 8px; margin: 6px 0; }
+.latihan-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin: 12px 0; }
+.latihan-box p { color: #92400e; font-weight: 600; margin: 4px 0; }
+.back-btn { background: #e5e7eb; border: none; padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: 600; margin-bottom: 16px; color: #374151; }
+.back-btn:hover { background: #d1d5db; }
+
+/* BUTTONS & FORMS */
+.btn { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 13.5px; display: inline-flex; align-items: center; gap: 6px; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
+.btn-green { background: linear-gradient(135deg, #10b981, #059669); }
+.btn-orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); padding: 6px 12px; font-size: 12px; }
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #374151; }
+.form-control { width: 100%; padding: 10px 14px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 14px; }
+.form-control:focus { outline: none; border-color: #667eea; }
+
+/* SIMULASI INTERAKTIF */
+.sim-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+.sim-shelf { background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 16px; padding: 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.drag-source { cursor: grab; user-select: none; padding: 8px 16px; background: #fff; border-radius: 14px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: #4f46e5; font-size: 15px; border: 2px solid #c7d2fe; }
+.drag-source:active { cursor: grabbing; }
+.sim-arena { min-height: 220px; background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%); border: 3px solid #667eea; border-radius: 20px; padding: 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: center; transition: 0.2s; }
+.sim-arena.dragover { background: #dbeafe; border-style: dashed; transform: scale(1.01); }
+.sim-item { width: 70px; height: 70px; background: #fff; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); cursor: pointer; transition: 0.2s; position: relative; animation: bounceIn 0.35s; user-select: none; }
+.sim-item:hover { transform: scale(1.12); }
+.sim-item.highlight { background: #fef08a; border: 3px solid #eab308; transform: scale(1.18); }
+.sim-item .num-badge { position: absolute; top: -6px; right: -6px; background: #667eea; color: #fff; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+@keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+
+/* SOAL & KUIS */
+.soal-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 14px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06); border: 1px solid #f1f5f9; }
+.soal-card .no { background: #667eea; color: #fff; width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; margin-right: 8px; font-size: 14px; }
+.soal-card .pertanyaan { font-size: 16px; font-weight: 600; color: #222; margin-bottom: 12px; }
+.opsi { display: flex; align-items: center; gap: 10px; padding: 11px 15px; border: 2px solid #e5e7eb; border-radius: 12px; margin: 7px 0; cursor: pointer; transition: 0.2s; }
+.opsi:hover { border-color: #667eea; background: #f5f7ff; }
+.opsi.selected { border-color: #667eea; background: #eef2ff; font-weight: 600; }
+.opsi input { accent-color: #667eea; transform: scale(1.25); }
+
+/* HASIL CARD */
+.hasil-card { text-align: center; padding: 36px 24px; background: linear-gradient(135deg, #10b981, #059669); color: #fff; border-radius: 22px; box-shadow: 0 12px 30px rgba(16, 185, 129, 0.35); }
+.hasil-card .nilai { font-size: 72px; font-weight: 900; margin: 10px 0; }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
+th { background: #f8fafc; color: #667eea; font-weight: 700; text-transform: uppercase; font-size: 11.5px; letter-spacing: 0.5px; }
+tr:hover td { background: #fafbff; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 9998; padding: 16px; }
+.modal { background: #fff; border-radius: 20px; padding: 26px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25); animation: pop 0.25s; }
+
+/* TOAST & VOICE */
+.toast { position: fixed; top: 20px; right: 20px; background: #10b981; color: #fff; padding: 14px 22px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); font-weight: 600; z-index: 9999; animation: slide 0.3s; }
+@keyframes slide { from { transform: translateX(400px); } to { transform: translateX(0); } }
+.voice-btn { background: #fef3c7; color: #92400e; border: 2px solid #f59e0b; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 600; margin: 8px 0; font-size: 13px; }
+.voice-btn:hover { background: #fde68a; }
+
+@media (max-width: 640px) {
+  body { padding: 12px; }
+  .tabs { grid-template-columns: repeat(2, 1fr); }
+  .angka-grid { grid-template-columns: repeat(3, 1fr); }
+  .simbol-box { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HALAMAN LOGIN -->
+<div id="loginPage" class="login-wrap">
+  <div class="login-card">
+    <h1>📚 MathKids</h1>
+    <p>Belajar Matematika Kelas 1 SD</p>
+    <input type="text" id="username" placeholder="Username" autocomplete="off">
+    <input type="password" id="password" placeholder="Password" onkeydown="if(event.key==='Enter') login()">
+    <button class="login-btn" onclick="login()">🚀 Masuk</button>
+    <div class="err" id="err"></div>
+    <div class="hint">
+      <strong>Akun Demo (Klik untuk masuk cepat):</strong>
+      <div class="hint-chips">
+        <span class="chip" onclick="quickLogin('guru','guru123')">👨‍🏫 Guru (guru)</span>
+        <span class="chip" onclick="quickLogin('andi','siswa123')">👦 Andi</span>
+        <span class="chip" onclick="quickLogin('budi','siswa123')">👦 Budi</span>
+        <span class="chip" onclick="quickLogin('citra','siswa123')">👧 Citra</span>
+        <span class="chip" onclick="quickLogin('dewi','siswa123')">👧 Dewi</span>
+      </div>
+      <div style="margin-top:8px; font-size:11.5px; color:#555;">
+        Password semua 20 siswa (<code>andi</code> s.d. <code>tari</code>): <code>siswa123</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APLIKASI UTAMA -->
+<div id="app" class="container hidden">
+  <header>
+    <h1>📚 MathKids <span>Dibuat Oleh Daffa PI-A | Target Kelas 1 SD</span></h1>
+    <div class="header-right">
+      <span class="user-badge" id="userBadge"></span>
+      <button class="logout-btn" onclick="logout()">Keluar</button>
+    </div>
+  </header>
+
+  <!-- PANEL AKSI CEPAT GURU -->
+  <div id="guruBar" class="guru-bar hidden"></div>
+
+  <!-- NAVIGASI TAB GRID RAPI -->
+  <div class="tabs" id="tabs"></div>
+
+  <!-- KONTEN UTAMA -->
+  <div id="content"></div>
+</div>
+
+<div id="modalContainer" class="hidden"></div>
+<div id="toastContainer"></div>
+
+<script>
+// ================= DATA AWAL (1 GURU + 20 SISWA) =================
+const DEFAULT_USERS = [
+  { name: 'Guru Matematika', username: 'guru', password: 'guru123', role: 'guru' },
+  { name: 'Andi Pratama', username: 'andi', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Budi Santoso', username: 'budi', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Citra Lestari', username: 'citra', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Dewi Anggraini', username: 'dewi', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Eko Saputra', username: 'eko', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Fajar Nugroho', username: 'fajar', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Gita Permata', username: 'gita', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Hani Rahmawati', username: 'hani', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Indra Kusuma', username: 'indra', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Joko Widodo', username: 'joko', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Kiki Amalia', username: 'kiki', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Lani Marlina', username: 'lani', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Maya Sari', username: 'maya', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Naufal Hakim', username: 'naufal', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Olivia Putri', username: 'olivia', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Putri Ayu', username: 'putri', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Qori Aulia', username: 'qori', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Rian Hidayat', username: 'rian', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Siti Nurhaliza', username: 'siti', password: 'siswa123', role: 'siswa', kelas: '1A' },
+  { name: 'Tari Melati', username: 'tari', password: 'siswa123', role: 'siswa', kelas: '1A' }
+];
+
+// ================= 10 BAB MATERI LENGKAP =================
+const DEFAULT_MATERI = [
+  {
+    id: 1, judul: 'Bilangan 1 sampai 10', bab: 'Bab 1', desc: 'Mengenal, membilang, dan menulis angka 1-10', icon: '🔢', warna: '#6366f1',
+    tujuan: ['Mengenal lambang bilangan 1 sampai 10', 'Membilang banyak benda 1 sampai 10', 'Membilang maju dan mundur dengan lancar', 'Menuliskan lambang bilangan secara tepat'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Mengenal lambang bilangan 1-10</li><li>Membilang banyak benda 1-10</li><li>Membilang maju dan mundur</li><li>Menuliskan lambang bilangan</li></ul>
+      <h3>📖 Mengenal Angka</h3><p>Angka adalah lambang untuk menyatakan banyaknya benda. Mari kenali angka 1 sampai 10!</p>
+      <div class="angka-grid">
+        <div class="angka-card"><span>1</span><p>satu</p><div>🍎</div></div>
+        <div class="angka-card"><span>2</span><p>dua</p><div>🍎🍎</div></div>
+        <div class="angka-card"><span>3</span><p>tiga</p><div>🍎🍎🍎</div></div>
+        <div class="angka-card"><span>4</span><p>empat</p><div>🍎🍎🍎🍎</div></div>
+        <div class="angka-card"><span>5</span><p>lima</p><div>🍎🍎🍎🍎🍎</div></div>
+        <div class="angka-card"><span>6</span><p>enam</p><div>⭐⭐⭐⭐⭐⭐</div></div>
+        <div class="angka-card"><span>7</span><p>tujuh</p><div>⭐⭐⭐⭐⭐⭐⭐</div></div>
+        <div class="angka-card"><span>8</span><p>delapan</p><div>⭐⭐⭐⭐⭐⭐⭐⭐</div></div>
+        <div class="angka-card"><span>9</span><p>sembilan</p><div>⭐⭐⭐⭐⭐⭐⭐⭐⭐</div></div>
+        <div class="angka-card"><span>10</span><p>sepuluh</p><div>⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐</div></div>
+      </div>
+      <h3>🔊 Membilang Maju</h3><p>Mari membilang bersama: <strong>1, 2, 3, 4, 5, 6, 7, 8, 9, 10</strong></p>
+      <button type="button" class="voice-btn" onclick="speak('Mari membilang maju bersama. Satu, dua, tiga, empat, lima, enam, tujuh, delapan, sembilan, sepuluh')">🔊 Dengarkan Membilang Maju</button>
+      <h3>🔊 Membilang Mundur</h3><p>Membilang mundur: <strong>10, 9, 8, 7, 6, 5, 4, 3, 2, 1</strong></p>
+      <button type="button" class="voice-btn" onclick="speak('Membilang mundur. Sepuluh, sembilan, delapan, tujuh, enam, lima, empat, tiga, dua, satu')">🔊 Dengarkan Membilang Mundur</button>
+      <h3>✏️ Menulis Angka</h3><p>Latihan menulis angka di udara, di pasir, atau di buku tulis. Ingat! Angka 6 dan 9 berbeda ya.</p>
+      <h3>💡 Contoh Kegiatan</h3><ul><li>Berapa jumlah jari tanganmu? (10)</li><li>Berapa jumlah pensil di kotakmu?</li><li>Berapa jumlah teman di kelasmu?</li></ul>`
+  },
+  {
+    id: 2, judul: 'Membandingkan & Mengurutkan', bab: 'Bab 2', desc: 'Lebih besar, lebih kecil, dan urutan bilangan', icon: '⚖️', warna: '#10b981',
+    tujuan: ['Membandingkan dua kumpulan benda atau bilangan', 'Menggunakan simbol >, <, dan = dengan tepat', 'Mengurutkan bilangan dari terkecil ke terbesar dan sebaliknya'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Membandingkan dua bilangan</li><li>Menggunakan simbol &gt;, &lt;, =</li><li>Mengurutkan bilangan</li></ul>
+      <h3>📖 Lebih Besar dan Lebih Kecil</h3><p>🍎🍎🍎 (3 apel) vs 🍎🍎🍎🍎🍎 (5 apel)</p><p>Mana yang lebih banyak? 5 lebih banyak dari 3. Maka <strong>5 &gt; 3</strong>.</p>
+      <h3>🐊 Trik Mulut Buaya</h3><p>Simbol <strong>&gt;</strong> dan <strong>&lt;</strong> seperti mulut buaya. Mulut buaya selalu terbuka ke arah angka yang <strong>lebih besar</strong>.</p>
+      <div class="simbol-box">
+        <div><strong>5 &gt; 3</strong>5 lebih besar dari 3</div>
+        <div><strong>2 &lt; 7</strong>2 lebih kecil dari 7</div>
+        <div><strong>4 = 4</strong>4 sama dengan 4</div>
+      </div>
+      <h3>📊 Mengurutkan Bilangan</h3><p><strong>Terkecil → terbesar:</strong> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10</p><p><strong>Terbesar → terkecil:</strong> 10, 9, 8, 7, 6, 5, 4, 3, 2, 1</p>
+      <button type="button" class="voice-btn" onclick="speak('Lima lebih besar dari tiga. Dua lebih kecil dari tujuh. Empat sama dengan empat')">🔊 Dengarkan Simbol</button>
+      <h3>🎮 Permainan</h3><p>Acak kartu angka 1-10, lalu susun dari kecil ke besar. Seru!</p>`
+  },
+  {
+    id: 3, judul: 'Penjumlahan sampai 10', bab: 'Bab 3', desc: 'Belajar menjumlahkan dengan benda nyata', icon: '➕', warna: '#f59e0b',
+    tujuan: ['Memahami makna penjumlahan sebagai penggabungan', 'Menjumlahkan dua kelompok benda konkret', 'Menyelesaikan penjumlahan hingga hasil maksimal 10'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Memahami makna penjumlahan</li><li>Menjumlahkan dengan benda konkret</li><li>Menjumlahkan sampai hasil 10</li></ul>
+      <h3>📖 Apa itu Penjumlahan?</h3><p>Penjumlahan adalah <strong>menggabungkan</strong> dua kelompok benda menjadi satu kelompok yang lebih besar.</p>
+      <h3>🍎 Contoh</h3><p>Ibu punya 2 apel 🍎🍎</p><p>Ayah membawa 3 apel 🍎🍎🍎</p><p>Total: 🍎🍎 + 🍎🍎🍎 = 🍎🍎🍎🍎🍎 = <strong>5 apel</strong></p><p>Ditulis: <strong>2 + 3 = 5</strong></p>
+      <h3>✏️ Latihan</h3><div class="latihan-box"><p>1 + 1 = 2</p><p>2 + 2 = 4</p><p>3 + 4 = 7</p><p>5 + 5 = 10</p></div>
+      <h3>💡 Soal Cerita</h3><p>"Ani punya 4 kue. Ayah membawa 2 kue. Berapa total kue Ani?"</p><p>Jawab: 4 + 2 = 6 kue</p>
+      <button type="button" class="voice-btn" onclick="speak('Dua ditambah tiga sama dengan lima. Empat ditambah dua sama dengan enam')">🔊 Dengarkan Penjumlahan</button>`
+  },
+  {
+    id: 4, judul: 'Pengurangan sampai 10', bab: 'Bab 4', desc: 'Mengurangi dan membandingkan', icon: '➖', warna: '#ef4444',
+    tujuan: ['Memahami makna pengurangan sebagai pengambilan benda', 'Melakukan pengurangan dengan benda nyata', 'Menghitung hasil pengurangan bilangan sampai 10'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Memahami makna pengurangan</li><li>Mengurangi dengan benda konkret</li><li>Mengurangi sampai hasil 10</li></ul>
+      <h3>📖 Apa itu Pengurangan?</h3><p>Pengurangan adalah <strong>mengambil</strong> sebagian benda dari suatu kelompok.</p>
+      <h3>🍬 Contoh</h3><p>Ada 7 permen 🍬🍬🍬🍬🍬🍬🍬</p><p>Dimakan 3: 🍬🍬🍬</p><p>Sisa: 🍬🍬🍬🍬 = <strong>4 permen</strong></p><p>Ditulis: <strong>7 - 3 = 4</strong></p>
+      <h3>📊 Pengurangan sebagai Membandingkan</h3><p>"Berapa selisih 5 dan 2?" → 5 - 2 = 3.</p>
+      <h3>✏️ Latihan</h3><div class="latihan-box"><p>5 - 2 = 3</p><p>8 - 3 = 5</p><p>10 - 4 = 6</p><p>9 - 9 = 0</p></div>
+      <h3>💡 Soal Cerita</h3><p>"Ada 8 burung di pohon. 3 terbang pergi. Berapa sisa?"</p><p>Jawab: 8 - 3 = 5 burung</p>
+      <button type="button" class="voice-btn" onclick="speak('Tujuh dikurangi tiga sama dengan empat. Delapan dikurangi tiga sama dengan lima')">🔊 Dengarkan Pengurangan</button>`
+  },
+  {
+    id: 5, judul: 'Bentuk Geometri Dasar', bab: 'Bab 5', desc: 'Lingkaran, segitiga, dan persegi', icon: '🔷', warna: '#8b5cf6',
+    tujuan: ['Mengenal bentuk lingkaran, segitiga, dan persegi', 'Menyebutkan ciri-ciri sisi dan sudut bangun datar', 'Menemukan benda berbentuk geometri di sekitar'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Mengenal bentuk dasar</li><li>Menyebutkan ciri-ciri</li><li>Menemukan bentuk di sekitar</li></ul>
+      <h3>🔵 Lingkaran</h3><p>Bentuk bulat, tidak memiliki sudut.</p><p><strong>Contoh:</strong> roda sepeda, jam dinding, bola</p>
+      <h3>🔺 Segitiga</h3><p>Memiliki <strong>3 sisi</strong> dan <strong>3 sudut</strong>.</p><p><strong>Contoh:</strong> atap rumah, rambu lalu lintas</p>
+      <h3>🟦 Persegi</h3><p>Memiliki <strong>4 sisi sama panjang</strong> dan <strong>4 sudut</strong>.</p><p><strong>Contoh:</strong> ubin lantai, jendela, buku</p>
+      <button type="button" class="voice-btn" onclick="speak('Lingkaran berbentuk bulat. Segitiga memiliki tiga sisi. Persegi memiliki empat sisi')">🔊 Dengarkan Bentuk</button>
+      <h3>🎨 Kreasi</h3><p>Gambar rumah dari persegi, segitiga, dan lingkaran!</p>`
+  },
+  {
+    id: 6, judul: 'Arah dan Posisi', bab: 'Bab 6', desc: 'Atas, bawah, samping, depan, belakang', icon: '🧭', warna: '#06b6d4',
+    tujuan: ['Memahami letak dan posisi benda di sekitar', 'Menggunakan kata posisi atas, bawah, samping, depan, belakang'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Memahami posisi benda</li><li>Menggunakan kata posisi</li></ul>
+      <h3>📖 Posisi Benda</h3>
+      <div class="posisi-box"><p><strong>Di atas:</strong> Buku ada di atas meja</p><p><strong>Di bawah:</strong> Bola ada di bawah meja</p><p><strong>Di samping:</strong> Pensil di samping buku</p><p><strong>Di depan:</strong> Papan tulis di depan kelas</p><p><strong>Di belakang:</strong> Kursi di belakang meja</p></div>
+      <button type="button" class="voice-btn" onclick="speak('Buku ada di atas meja. Bola ada di bawah meja. Pensil ada di samping buku')">🔊 Dengarkan Posisi</button>
+      <h3>🎮 Permainan</h3><p>Letakkan pensil di atas buku. Letakkan bola di bawah meja!</p>`
+  },
+  {
+    id: 7, judul: 'Pola Sederhana', bab: 'Bab 7', desc: 'Pola warna dan bentuk berulang', icon: '🎨', warna: '#ec4899',
+    tujuan: ['Mengenali susunan pola warna dan bentuk', 'Melanjutkan pola berulang secara tepat', 'Membuat kreasi pola sederhana sendiri'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Mengenali pola</li><li>Melanjutkan pola</li><li>Membuat pola sendiri</li></ul>
+      <h3>📖 Apa itu Pola?</h3><p>Pola adalah susunan yang <strong>berulang</strong> secara teratur.</p>
+      <h3>🌈 Pola Warna</h3><p>🔴 🟡 🔴 🟡 🔴 🟡 ... (merah-kuning berulang)</p>
+      <h3>🔺 Pola Bentuk</h3><p>🔺 ⚪ 🔺 ⚪ 🔺 ⚪ ... (segitiga-lingkaran berulang)</p>
+      <h3>✏️ Lanjutkan Pola!</h3><p>🍎 🍌 🍎 🍌 🍎 ___ (jawab: 🍌)</p><p>🔵 🔴 🔵 🔴 ___ ___ (jawab: 🔵 🔴)</p>
+      <button type="button" class="voice-btn" onclick="speak('Pola adalah susunan yang berulang. Merah kuning merah kuning')">🔊 Dengarkan Pola</button>`
+  },
+  {
+    id: 8, judul: 'Pengukuran Panjang & Berat', bab: 'Bab 8', desc: 'Mengukur dengan satuan non-baku', icon: '📏', warna: '#84cc16',
+    tujuan: ['Mengukur panjang benda dengan satuan tidak baku (jengkal, pensil)', 'Membandingkan berat dua benda di sekitar'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Mengukur panjang satuan non-baku</li><li>Membandingkan berat</li></ul>
+      <h3>📖 Mengukur Panjang</h3><p>Panjang meja bisa diukur dengan:</p><ul><li>Jengkal tangan</li><li>Pensil</li><li>Buku tulis</li></ul><p>Hasilnya berbeda-beda karena satuan berbeda. Itulah sebabnya perlu satuan yang sama.</p>
+      <h3>⚖️ Membandingkan Berat</h3><p>Mana yang lebih berat?</p><ul><li>Buku atau pensil? (Buku)</li><li>Bola atau balon? (Bola)</li></ul>
+      <button type="button" class="voice-btn" onclick="speak('Kita bisa mengukur panjang dengan jengkal tangan atau pensil')">🔊 Dengarkan Pengukuran</button>
+      <h3>🎮 Kegiatan</h3><p>Bandingkan tinggi badanmu dengan temanmu!</p>`
+  },
+  {
+    id: 9, judul: 'Waktu Sehari-hari', bab: 'Bab 9', desc: 'Urutan kegiatan pagi, siang, malam', icon: '⏰', warna: '#f97316',
+    tujuan: ['Mengurutkan kegiatan sehari-hari (pagi, siang, malam)', 'Mengenal nama-nama hari dan bulan dalam setahun'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Mengurutkan kegiatan</li><li>Mengenal waktu</li></ul>
+      <h3>🌅 Kegiatan Pagi</h3><ul><li>Bangun tidur</li><li>Mandi & berpakaian</li><li>Sarapan</li><li>Berangkat sekolah</li></ul>
+      <h3>☀️ Kegiatan Siang</h3><ul><li>Pulang sekolah</li><li>Makan siang</li><li>Tidur siang</li></ul>
+      <h3>🌙 Kegiatan Malam</h3><ul><li>Belajar</li><li>Makan malam</li><li>Tidur</li></ul>
+      <h3>📅 Nama Hari</h3><p>Senin, Selasa, Rabu, Kamis, Jumat, Sabtu, Minggu</p>
+      <h3>📅 Nama Bulan</h3><p>Januari, Februari, Maret, April, Mei, Juni, Juli, Agustus, September, Oktober, November, Desember</p>
+      <button type="button" class="voice-btn" onclick="speak('Pagi hari kita bangun tidur dan sarapan. Siang hari kita pulang sekolah. Malam hari kita tidur')">🔊 Dengarkan Waktu</button>`
+  },
+  {
+    id: 10, judul: 'Soal Cerita Sederhana', bab: 'Bab 10', desc: 'Memecahkan masalah kontekstual', icon: '📝', warna: '#64748b',
+    tujuan: ['Memahami masalah dalam bentuk soal cerita sederhana', 'Menentukan operasi hitung tambah atau kurang yang tepat', 'Menyelesaikan soal cerita kehidupan sehari-hari'],
+    konten: `
+      <h3>🎯 Tujuan Pembelajaran</h3><ul><li>Memahami soal cerita</li><li>Menentukan operasi</li><li>Menyelesaikan dengan benar</li></ul>
+      <h3>📖 Langkah Mengerjakan</h3><ol><li>Baca teliti</li><li>Ceritakan kembali</li><li>Tentukan: tambah atau kurang?</li><li>Hitung</li><li>Periksa</li></ol>
+      <h3>💡 Contoh 1 (Penjumlahan)</h3><p><em>"Ani punya 4 buku. Ibu memberi 2 lagi. Berapa total?"</em></p><p>Kata kunci: "memberi lagi" → penjumlahan</p><p>4 + 2 = 6 buku</p>
+      <h3>💡 Contoh 2 (Pengurangan)</h3><p><em>"Ada 8 burung. 3 terbang pergi. Berapa sisa?"</em></p><p>Kata kunci: "terbang pergi" → pengurangan</p><p>8 - 3 = 5 burung</p>
+      <button type="button" class="voice-btn" onclick="speak('Empat ditambah dua sama dengan enam buku. Delapan dikurangi tiga sama dengan lima burung')">🔊 Dengarkan Soal Cerita</button>`
+  }
+];
+
+// ================= KUIS TERPISAH PER MATERI =================
+const DEFAULT_QUIZ_BANKS = [
+  {
+    materiId: 1,
+    bab: 'Bab 1',
+    judul: 'Latihan Bab 1: Berhitung & Bilangan 1–10',
+    icon: '🔢',
+    warna: '#6366f1',
+    soal: [
+      { q: 'Ada berapa jumlah apel berikut: 🍎🍎🍎🍎🍎🍎 ?', ops: ['5', '6', '7', '8'], a: 1 },
+      { q: 'Angka berapakah setelah angka 7?', ops: ['6', '9', '8', '10'], a: 2 },
+      { q: 'Membilang mundur: 5, 4, 3, ..., 1. Angka yang hilang adalah?', ops: ['2', '6', '0', '7'], a: 0 },
+      { q: 'Jumlah seluruh jari pada kedua tangan kita ada...', ops: ['5', '8', '9', '10'], a: 3 }
+    ]
+  },
+  {
+    materiId: 2,
+    bab: 'Bab 2',
+    judul: 'Latihan Bab 2: Membandingkan & Mengurutkan',
+    icon: '⚖️',
+    warna: '#10b981',
+    soal: [
+      { q: 'Simbol yang tepat untuk membandingkan 8 ... 4 adalah?', ops: ['<', '>', '=', '+'], a: 1 },
+      { q: 'Bilangan manakah yang paling kecil: 9, 3, 7, 5?', ops: ['9', '7', '3', '5'], a: 2 },
+      { q: 'Urutan bilangan dari yang terkecil ke terbesar yang benar adalah?', ops: ['2, 5, 4, 8', '9, 7, 5, 3', '1, 3, 6, 9', '4, 2, 6, 8'], a: 2 },
+      { q: '6 ... 6. Tanda perbandingan yang tepat adalah?', ops: ['=', '>', '<', '-'], a: 0 }
+    ]
+  },
+  {
+    materiId: 3,
+    bab: 'Bab 3',
+    judul: 'Latihan Bab 3: Penjumlahan sampai 10',
+    icon: '➕',
+    warna: '#f59e0b',
+    soal: [
+      { q: 'Berapa hasil dari 3 + 4 = ...?', ops: ['6', '7', '8', '5'], a: 1 },
+      { q: '🍎🍎 + 🍎🍎🍎 = ... apel', ops: ['4', '6', '5', '7'], a: 2 },
+      { q: 'Budi punya 4 kelereng. Kakak memberi 4 kelereng lagi. Jumlah kelereng Budi sekarang?', ops: ['8', '7', '9', '6'], a: 0 },
+      { q: '6 + 4 = ...', ops: ['9', '8', '10', '7'], a: 2 }
+    ]
+  },
+  {
+    materiId: 4,
+    bab: 'Bab 4',
+    judul: 'Latihan Bab 4: Pengurangan sampai 10',
+    icon: '➖',
+    warna: '#ef4444',
+    soal: [
+      { q: 'Berapa hasil dari 9 - 4 = ...?', ops: ['4', '6', '5', '3'], a: 2 },
+      { q: 'Ada 8 permen, dimakan 3 permen. Sisa permen adalah...', ops: ['5', '4', '6', '3'], a: 0 },
+      { q: '10 - 6 = ...', ops: ['5', '4', '3', '6'], a: 1 },
+      { q: '7 - 7 = ...', ops: ['1', '7', '0', '14'], a: 2 }
+    ]
+  }
+];
+
+// ================= STATE & LOCAL STORAGE =================
+let USERS = JSON.parse(localStorage.getItem('mk_users')) || DEFAULT_USERS;
+let MATERIS = JSON.parse(localStorage.getItem('mk_materis')) || DEFAULT_MATERI;
+let QUIZ_BANKS = JSON.parse(localStorage.getItem('mk_quizzes')) || DEFAULT_QUIZ_BANKS;
+let SCORES = JSON.parse(localStorage.getItem('mk_scores')) || {
+  andi: { 1: 100, 2: 75, 3: 100, 4: 75 },
+  budi: { 1: 75, 2: 100, 3: 75 },
+  citra: { 1: 100, 2: 100, 3: 100, 4: 100 }
+};
+
+let currentUser = JSON.parse(localStorage.getItem('mk_current_user')) || null;
+let activeTab = 'materi';
+let openMateriId = null;
+let openQuizMateriId = null;
+let quizAnswers = {};
+
+// State Simulasi Digital
+let simCount = 3;
+let simEmoji = '🍎';
+let simName = 'Apel';
+
+function saveAll() {
+  localStorage.setItem('mk_users', JSON.stringify(USERS));
+  localStorage.setItem('mk_materis', JSON.stringify(MATERIS));
+  localStorage.setItem('mk_quizzes', JSON.stringify(QUIZ_BANKS));
+  localStorage.setItem('mk_scores', JSON.stringify(SCORES));
+}
+
+function showToast(msg, bg = '#10b981') {
+  const c = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.style.background = bg;
+  el.textContent = msg;
+  c.appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+
+// Suara TTS aman tanpa menampilkan peringatan/error jika browser tidak mendukung
+function speak(text) {
+  try {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.lang = 'id-ID';
+      msg.rate = 0.92;
+      window.speechSynthesis.speak(msg);
+    }
+  } catch (e) {
+    // Diamkan tanpa error
+  }
+}
+
+// ================= AUTH =================
+function quickLogin(u, p) {
+  document.getElementById('username').value = u;
+  document.getElementById('password').value = p;
+  login();
+}
+
+function login() {
+  const u = document.getElementById('username').value.trim().toLowerCase();
+  const p = document.getElementById('password').value.trim();
+  const err = document.getElementById('err');
+
+  const found = USERS.find(x => x.username.toLowerCase() === u && x.password === p);
+  if (!found) {
+    err.textContent = 'Username atau password salah! Silakan cek kembali.';
+    return;
+  }
+
+  err.textContent = '';
+  currentUser = found;
+  localStorage.setItem('mk_current_user', JSON.stringify(found));
+  activeTab = 'materi';
+  openMateriId = null;
+  openQuizMateriId = null;
+  renderApp();
+  showToast(`Selamat datang kembali, ${found.name}! 👋`);
+}
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('mk_current_user');
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('loginPage').classList.remove('hidden');
+  document.getElementById('username').value = '';
+  document.getElementById('password').value = '';
+}
+
+// ================= RENDER UTAMA =================
+function renderApp() {
+  if (!currentUser) {
+    document.getElementById('loginPage').classList.remove('hidden');
+    document.getElementById('app').classList.add('hidden');
+    return;
+  }
+
+  document.getElementById('loginPage').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+
+  document.getElementById('userBadge').textContent =
+    currentUser.role === 'guru'
+      ? `👨‍🏫 ${currentUser.name}`
+      : `👦 ${currentUser.name} (Kelas ${currentUser.kelas || '1A'})`;
+
+  renderGuruBar();
+  renderTabs();
+  renderContent();
+}
+
+function renderGuruBar() {
+  const bar = document.getElementById('guruBar');
+  if (currentUser.role !== 'guru') {
+    bar.classList.add('hidden');
+    return;
+  }
+  bar.classList.remove('hidden');
+
+  const siswas = USERS.filter(u => u.role === 'siswa');
+  let totalScoreSum = 0;
+  let totalCompleted = 0;
+
+  siswas.forEach(s => {
+    const sc = SCORES[s.username] || {};
+    Object.values(sc).forEach(val => {
+      totalScoreSum += val;
+      totalCompleted++;
+    });
+  });
+
+  const avg = totalCompleted > 0 ? (totalScoreSum / totalCompleted).toFixed(1) : 0;
+
+  bar.innerHTML = `
+    <div class="guru-stats">
+      <div class="stat-pill">👥 Total Siswa: <span>${siswas.length}</span></div>
+      <div class="stat-pill">📚 Total Materi: <span>${MATERIS.length}</span></div>
+      <div class="stat-pill">📊 Rata-rata Nilai: <span>${avg}</span></div>
+      <div class="stat-pill">✅ Kuis Dikerjakan: <span>${totalCompleted}</span></div>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn btn-green" onclick="openAddMateriModal()">➕ Tambah Materi</button>
+      <button class="btn" onclick="switchTab('siswa')">👥 Kelola Siswa</button>
+      <button class="btn btn-orange" onclick="openAddSoalModal()">📝 Tambah Soal</button>
+    </div>
+  `;
+}
+
+function renderTabs() {
+  const tabsEl = document.getElementById('tabs');
+  const isGuru = currentUser.role === 'guru';
+
+  const items = [
+    { id: 'materi', label: '📚 Materi' },
+    { id: 'simulasi', label: '🎬 Simulasi Digital' },
+    { id: 'tujuan', label: '🎯 Tujuan Belajar' },
+    { id: 'kuis', label: '📝 Tugas & Kuis' },
+    { id: 'nilai', label: isGuru ? '📊 Rekap Nilai' : '🏆 Nilai Saya' },
+    ...(isGuru ? [{ id: 'siswa', label: '👥 Data Siswa' }] : []),
+    { id: 'kesimpulan', label: '💡 Kesimpulan' },
+    { id: 'sumber', label: '📖 Sumber' }
+  ];
+
+  tabsEl.innerHTML = items.map(t => `
+    <button class="tab ${activeTab === t.id ? 'active' : ''}" onclick="switchTab('${t.id}')">
+      ${t.label}
+    </button>
+  `).join('');
+}
+
+function switchTab(id) {
+  activeTab = id;
+  openMateriId = null;
+  openQuizMateriId = null;
+  renderTabs();
+  renderContent();
+}
+
+function renderContent() {
+  const c = document.getElementById('content');
+  c.innerHTML = '';
+
+  if (activeTab === 'materi') {
+    openMateriId ? renderMateriDetail(c, openMateriId) : renderMateriList(c);
+  } else if (activeTab === 'simulasi') {
+    renderSimulasi(c);
+  } else if (activeTab === 'tujuan') {
+    renderTujuan(c);
+  } else if (activeTab === 'kuis') {
+    openQuizMateriId ? renderQuizRunner(c, openQuizMateriId) : renderQuizList(c);
+  } else if (activeTab === 'nilai') {
+    renderNilai(c);
+  } else if (activeTab === 'siswa') {
+    renderSiswaManager(c);
+  } else if (activeTab === 'kesimpulan') {
+    renderKesimpulan(c);
+  } else if (activeTab === 'sumber') {
+    renderSumber(c);
+  }
+}
+
+// ================= TAB 1: MATERI =================
+function renderMateriList(c) {
+  const isGuru = currentUser.role === 'guru';
+  c.innerHTML = `
+    <div class="materi-grid">
+      ${MATERIS.map(m => `
+        <div class="materi-card" style="border-left-color: ${m.warna}" onclick="openMateriId=${m.id}; renderContent();">
+          <div>
+            <div class="icon">${m.icon}</div>
+            <div class="bab">${m.bab}</div>
+            <h3>${m.judul}</h3>
+            <p>${m.desc}</p>
+          </div>
+          ${isGuru ? `
+            <div style="margin-top:12px;">
+              <button class="btn btn-red" onclick="event.stopPropagation(); deleteMateri(${m.id})">🗑️ Hapus</button>
+            </div>
+          ` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderMateriDetail(c, id) {
+  const m = MATERIS.find(x => x.id === id);
+  if (!m) return;
+
+  c.innerHTML = `
+    <div class="card materi-detail">
+      <button class="back-btn" onclick="openMateriId=null; renderContent();">⬅️ Kembali ke Daftar Materi</button>
+      <div style="font-size:13px; font-weight:700; color:${m.warna}">${m.bab}</div>
+      <h2>${m.icon} ${m.judul}</h2>
+      <hr style="margin:12px 0; border:none; border-top:1px solid #eee;">
+      <div>${m.konten}</div>
+    </div>
+  `;
+}
+
+// ================= TAB 2: SIMULASI DIGITAL INTERAKTIF =================
+function renderSimulasi(c) {
+  c.innerHTML = `
+    <div class="card">
+      <h2>🎬 Simulasi Digital Berhitung Benda</h2>
+      <p>Pilih benda, klik tombol <strong>+ Tambah</strong>, atau <strong>seret (drag & drop)</strong> benda ke dalam kotak biru. Kamu juga bisa mengklik setiap benda di dalam kotak untuk menghitung satu per satu, atau menarik benda keluar kotak untuk menguranginya!</p>
+
+      <div class="sim-controls">
+        <button class="btn" style="background:#ef4444" onclick="setSimObject('🍎', 'Apel')">🍎 Apel</button>
+        <button class="btn" style="background:#f59e0b" onclick="setSimObject('⭐', 'Bintang')">⭐ Bintang</button>
+        <button class="btn" style="background:#3b82f6" onclick="setSimObject('🎈', 'Balon')">🎈 Balon</button>
+        <button class="btn" style="background:#10b981" onclick="setSimObject('🐱', 'Kucing')">🐱 Kucing</button>
+      </div>
+
+      <div class="sim-shelf">
+        <div id="sim-drag-source" class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'add-item')">
+          <span style="font-size:32px">${simEmoji}</span>
+          <span>Seret ${simName} ke Kotak</span>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-green" onclick="addSimItem()">➕ Tambah (+1)</button>
+          <button class="btn" style="background:#ef4444" onclick="removeSimItem()">➖ Kurangi (-1)</button>
+          <button class="btn" style="background:#0ea5e9" onclick="autoCountSim()">🔢 Hitung Berurutan</button>
+          <button class="back-btn" style="margin:0" onclick="resetSimArena()">🔄 Reset</button>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-bottom:12px; font-size:18px; font-weight:700; color:#4f46e5;">
+        Jumlah Benda di Dalam Kotak:
+        <span id="sim-counter" style="font-size:28px; background:#eef2ff; padding:4px 16px; border-radius:12px;">${simCount}</span>
+      </div>
+
+      <div id="sim-arena" class="sim-arena"
+           ondragover="event.preventDefault(); this.classList.add('dragover');"
+           ondragleave="this.classList.remove('dragover');"
+           ondrop="event.preventDefault(); this.classList.remove('dragover'); if(event.dataTransfer.getData('text/plain')==='add-item') addSimItem();">
+      </div>
+    </div>
+  `;
+  updateSimArena();
+}
+
+function setSimObject(emoji, name) {
+  simEmoji = emoji;
+  simName = name;
+  renderSimulasi(document.getElementById('content'));
+}
+
+function addSimItem() {
+  if (simCount >= 20) return;
+  simCount++;
+  updateSimArena();
+  speak(String(simCount));
+}
+
+function removeSimItem() {
+  if (simCount <= 0) return;
+  simCount--;
+  updateSimArena();
+  if (simCount > 0) speak(String(simCount));
+}
+
+function resetSimArena() {
+  simCount = 0;
+  updateSimArena();
+}
+
+function updateSimArena() {
+  const arena = document.getElementById('sim-arena');
+  const counter = document.getElementById('sim-counter');
+  if (!arena || !counter) return;
+
+  counter.textContent = simCount;
+  arena.innerHTML = '';
+
+  if (simCount === 0) {
+    arena.innerHTML = '<p style="color:#6366f1; font-weight:600;">Kotak masih kosong. Klik "+ Tambah" atau seret benda ke sini!</p>';
+    return;
+  }
+
+  for (let i = 1; i <= simCount; i++) {
+    const item = document.createElement('div');
+    item.className = 'sim-item';
+    item.id = 'sim-obj-' + i;
+    item.draggable = true;
+    item.title = 'Klik untuk menghitung atau tarik keluar kotak untuk mengurangi';
+    item.innerHTML = `<span class="num-badge">${i}</span><span>${simEmoji}</span>`;
+
+    item.onclick = () => {
+      document.querySelectorAll('.sim-item').forEach(el => el.classList.remove('highlight'));
+      item.classList.add('highlight');
+      speak(String(i));
+    };
+
+    item.ondragend = (e) => {
+      const rect = arena.getBoundingClientRect();
+      if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+        removeSimItem();
+      }
+    };
+
+    arena.appendChild(item);
+  }
+}
+
+function autoCountSim() {
+  if (simCount === 0) return;
+  let idx = 1;
+  const timer = setInterval(() => {
+    document.querySelectorAll('.sim-item').forEach(el => el.classList.remove('highlight'));
+    const el = document.getElementById('sim-obj-' + idx);
+    if (el) {
+      el.classList.add('highlight');
+      speak(String(idx));
+    }
+    idx++;
+    if (idx > simCount) clearInterval(timer);
+  }, 700);
+}
+
+// ================= TAB 3: TUJUAN PEMBELAJARAN =================
+function renderTujuan(c) {
+  c.innerHTML = `
+    <div class="card">
+      <h2>🎯 Capaian & Tujuan Pembelajaran Matematika Kelas 1 SD</h2>
+      <p>Berikut adalah target kompetensi yang akan dicapai peserta didik pada setiap bab:</p>
+      ${MATERIS.map(m => `
+        <div style="background:#f8fafc; border-left:5px solid ${m.warna}; padding:14px 18px; border-radius:12px; margin-bottom:12px;">
+          <strong style="color:#1e293b; font-size:16px;">${m.icon} ${m.bab}: ${m.judul}</strong>
+          <ul style="margin:8px 0 0 22px; color:#475569; line-height:1.7;">
+            ${(m.tujuan || [m.desc]).map(tp => `<li>${tp}</li>`).join('')}
+          </ul>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ================= TAB 4: TUGAS & KUIS PER MATERI =================
+function renderQuizList(c) {
+  const userScores = SCORES[currentUser.username] || {};
+  c.innerHTML = `
+    <div class="card">
+      <h2>📝 Tugas & Kuis Latihan per Materi</h2>
+      <p>Pilih paket latihan berdasarkan bab materi yang ingin dikerjakan:</p>
+      <div class="materi-grid" style="margin-top:16px;">
+        ${QUIZ_BANKS.map(qb => {
+          const skor = userScores[qb.materiId];
+          const done = skor !== undefined;
+          return `
+            <div class="materi-card" style="border-left-color: ${qb.warna}">
+              <div>
+                <div class="icon">${qb.icon}</div>
+                <div class="bab">${qb.bab} • ${qb.soal.length} Soal</div>
+                <h3>${qb.judul}</h3>
+                <p style="margin-top:6px;">
+                  ${done
+                    ? `<span style="color:#10b981; font-weight:700;">✅ Sudah Dikerjakan (Nilai: ${skor})</span>`
+                    : `<span style="color:#f59e0b; font-weight:600;">⏳ Belum Dikerjakan</span>`
+                  }
+                </p>
+              </div>
+              <button class="btn" style="margin-top:14px; width:100%; justify-content:center;" onclick="startQuiz(${qb.materiId})">
+                ${done ? '🔄 Kerjakan Ulang' : '🚀 Mulai Kerjakan'}
+              </button>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function startQuiz(materiId) {
+  openQuizMateriId = materiId;
+  quizAnswers = {};
+  renderContent();
+}
+
+function renderQuizRunner(c, materiId) {
+  const qb = QUIZ_BANKS.find(x => x.materiId === materiId);
+  if (!qb) return;
+
+  c.innerHTML = `
+    <div class="card">
+      <button class="back-btn" onclick="openQuizMateriId=null; renderContent();">⬅️ Kembali ke Daftar Kuis</button>
+      <h2>${qb.icon} ${qb.judul}</h2>
+      <p>Pilihlah jawaban yang paling benar di bawah ini!</p>
+
+      <div style="margin-top:16px;">
+        ${qb.soal.map((s, idx) => `
+          <div class="soal-card">
+            <div class="pertanyaan"><span class="no">${idx + 1}</span> ${s.q}</div>
+            ${s.ops.map((op, opIdx) => `
+              <div class="opsi ${quizAnswers[idx] === opIdx ? 'selected' : ''}" onclick="quizAnswers[${idx}]=${opIdx}; renderContent();">
+                <input type="radio" name="q_${idx}" ${quizAnswers[idx] === opIdx ? 'checked' : ''}>
+                <span><strong>${String.fromCharCode(65 + opIdx)}.</strong> ${op}</span>
+              </div>
+            `).join('')}
+          </div>
+        `).join('')}
+      </div>
+
+      <button class="btn btn-green" style="font-size:16px; padding:14px 28px;" onclick="submitQuiz(${materiId})">✅ Kumpulkan Jawaban</button>
+    </div>
+  `;
+}
+
+function submitQuiz(materiId) {
+  const qb = QUIZ_BANKS.find(x => x.materiId === materiId);
+  if (Object.keys(quizAnswers).length < qb.soal.length) {
+    showToast('Harap jawab semua soal terlebih dahulu!', '#ef4444');
+    return;
+  }
+
+  let benar = 0;
+  qb.soal.forEach((s, idx) => {
+    if (quizAnswers[idx] === s.a) benar++;
+  });
+
+  const nilai = Math.round((benar / qb.soal.length) * 100);
+  if (!SCORES[currentUser.username]) SCORES[currentUser.username] = {};
+  SCORES[currentUser.username][materiId] = nilai;
+  saveAll();
+  renderGuruBar();
+
+  const c = document.getElementById('content');
+  c.innerHTML = `
+    <div class="hasil-card">
+      <h2>🎉 Hebat! Kuis Selesai Dikerjakan</h2>
+      <p>${qb.judul}</p>
+      <div class="nilai">${nilai}</div>
+      <p>Jawaban benar: <strong>${benar}</strong> dari <strong>${qb.soal.length}</strong> soal.</p>
+      <br>
+      <button class="btn" style="background:#fff; color:#059669;" onclick="openQuizMateriId=null; renderContent();">Kembali ke Daftar Kuis</button>
+    </div>
+  `;
+  speak(`Hebat! Nilai kamu adalah ${nilai}`);
+}
+
+// ================= TAB 5: NILAI SAYA / REKAP NILAI =================
+function renderNilai(c) {
+  if (currentUser.role === 'siswa') {
+    const userScores = SCORES[currentUser.username] || {};
+    c.innerHTML = `
+      <div class="card">
+        <h2>🏆 Laporan Nilai Saya (${currentUser.name})</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Bab</th>
+                <th>Materi Latihan</th>
+                <th>Nilai Akhir</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${QUIZ_BANKS.map(qb => {
+                const sc = userScores[qb.materiId];
+                return `
+                  <tr>
+                    <td><strong>${qb.bab}</strong></td>
+                    <td>${qb.judul}</td>
+                    <td><strong style="font-size:16px; color:#667eea;">${sc !== undefined ? sc : '-'}</strong></td>
+                    <td>${sc !== undefined ? '<span style="color:#10b981; font-weight:700;">✅ Tuntas</span>' : '<span style="color:#9ca3af;">Belum dikerjakan</span>'}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  } else {
+    const siswas = USERS.filter(u => u.role === 'siswa');
+    c.innerHTML = `
+      <div class="card">
+        <h2>📊 Rekapitulasi Nilai Seluruh Siswa (${siswas.length} Siswa)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Siswa</th>
+                <th>Kelas</th>
+                ${QUIZ_BANKS.map(qb => `<th>${qb.bab}</th>`).join('')}
+                <th>Rata-rata</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${siswas.map((s, idx) => {
+                const sc = SCORES[s.username] || {};
+                const vals = QUIZ_BANKS.map(qb => sc[qb.materiId]).filter(v => v !== undefined);
+                const avg = vals.length > 0 ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : '-';
+                return `
+                  <tr>
+                    <td>${idx + 1}</td>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${s.kelas || '1A'}</td>
+                    ${QUIZ_BANKS.map(qb => `<td>${sc[qb.materiId] !== undefined ? sc[qb.materiId] : '-'}</td>`).join('')}
+                    <td><strong style="color:#667eea;">${avg}</strong></td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+}
+
+// ================= TAB KHUSUS GURU: DATA SISWA =================
+function renderSiswaManager(c) {
+  const siswas = USERS.filter(u => u.role === 'siswa');
+  c.innerHTML = `
+    <div class="card">
+      <h2>➕ Tambah Siswa Baru</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; align-items:end;">
+        <div class="form-group" style="margin:0;">
+          <label>Nama Lengkap Siswa</label>
+          <input type="text" id="newSiswaName" class="form-control" placeholder="Contoh: Raka Pratama">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Username Login</label>
+          <input type="text" id="newSiswaUser" class="form-control" placeholder="Contoh: raka">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Password</label>
+          <input type="text" id="newSiswaPass" class="form-control" value="siswa123">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Kelas</label>
+          <input type="text" id="newSiswaKelas" class="form-control" value="1A">
+        </div>
+        <button class="btn btn-green" style="height:42px; justify-content:center;" onclick="addSiswa()">💾 Simpan Siswa</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>👥 Daftar Siswa Terdaftar (${siswas.length} Siswa)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Lengkap</th>
+              <th>Username</th>
+              <th>Kelas</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${siswas.map((s, idx) => `
+              <tr>
+                <td>${idx + 1}</td>
+                <td><strong>${s.name}</strong></td>
+                <td><code>${s.username}</code></td>
+                <td>${s.kelas || '1A'}</td>
+                <td>
+                  <button class="btn btn-red" onclick="deleteSiswa('${s.username}')">🗑️ Hapus</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function addSiswa() {
+  const name = document.getElementById('newSiswaName').value.trim();
+  const username = document.getElementById('newSiswaUser').value.trim().toLowerCase();
+  const password = document.getElementById('newSiswaPass').value.trim() || 'siswa123';
+  const kelas = document.getElementById('newSiswaKelas').value.trim() || '1A';
+
+  if (!name || !username) {
+    showToast('Nama dan username wajib diisi!', '#ef4444');
+    return;
+  }
+  if (USERS.some(u => u.username.toLowerCase() === username)) {
+    showToast('Username sudah dipakai!', '#ef4444');
+    return;
+  }
+
+  USERS.push({ name, username, password, role: 'siswa', kelas });
+  saveAll();
+  renderGuruBar();
+  renderContent();
+  showToast(`Siswa ${name} berhasil ditambahkan!`);
+}
+
+function deleteSiswa(username) {
+  USERS = USERS.filter(u => u.username !== username);
+  saveAll();
+  renderGuruBar();
+  renderContent();
+  showToast('Data siswa berhasil dihapus.', '#f59e0b');
+}
+
+// ================= TAB KESIMPULAN & SUMBER =================
+function renderKesimpulan(c) {
+  c.innerHTML = `
+    <div class="card">
+      <h2>💡 Kesimpulan & Rangkuman Pembelajaran</h2>
+      <p>Melalui aplikasi pembelajaran interaktif <strong>MathKids</strong> untuk kelas 1 SD, peserta didik telah mempelajari konsep-konsep dasar matematika secara bertahap dan menyenangkan:</p>
+      <ul style="margin:12px 0 12px 24px; line-height:1.9; color:#444;">
+        <li><strong>Bilangan & Membilang (1–10):</strong> Siswa mampu mengenali lambang bilangan, membilang maju-mundur, serta mengaitkan angka dengan banyaknya benda nyata.</li>
+        <li><strong>Perbandingan & Urutan:</strong> Siswa dapat membandingkan kumpulan benda menggunakan tanda <code>&gt;</code> (lebih besar), <code>&lt;</code> (lebih kecil), dan <code>=</code> (sama dengan).</li>
+        <li><strong>Operasi Hitung Dasar:</strong> Penjumlahan dipahami sebagai penggabungan dua kelompok benda, sedangkan pengurangan sebagai pengambilan sebagian benda.</li>
+        <li><strong>Geometri, Pola, Pengukuran & Waktu:</strong> Siswa mengenal bentuk bangun datar di sekitar, melanjutkan pola berulang, mengukur satuan tidak baku, serta mengurutkan waktu kegiatan sehari-hari.</li>
+      </ul>
+    </div>
+  `;
+}
+
+function renderSumber(c) {
+  c.innerHTML = `
+    <div class="card">
+      <h2>📖 Sumber & Daftar Referensi</h2>
+      <p>Materi dan struktur latihan pada media pembelajaran <strong>MathKids</strong> disusun berdasarkan acuan resmi pendidikan dasar:</p>
+      <ol style="margin:12px 0 12px 24px; line-height:1.9; color:#444;">
+        <li><strong>Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi (Kemendikbudristek).</strong> <em>Buku Panduan Guru & Buku Siswa Matematika untuk SD/MI Kelas I (Kurikulum Merdeka).</em> Pusat Perbukuan, BSKAP.</li>
+        <li><strong>Capaian Pembelajaran (CP) Fase A</strong> Mata Pelajaran Matematika SD/MI tentang Bilangan, Aljabar (Pola), Pengukuran, dan Geometri.</li>
+        <li><strong>Pengembang Media:</strong> Daffa PI-A — Program Studi Pendidikan Informatika.</li>
+      </ol>
+    </div>
+  `;
+}
+
+// ================= MODALS GURU (TAMBAH MATERI & TAMBAH SOAL) =================
+function openAddMateriModal() {
+  const mc = document.getElementById('modalContainer');
+  mc.className = 'modal-overlay';
+  mc.innerHTML = `
+    <div class="modal">
+      <h3 style="margin-bottom:14px;">➕ Tambah Bab / Materi Baru</h3>
+      <div class="form-group">
+        <label>Nomor Bab</label>
+        <input type="text" id="mBab" class="form-control" placeholder="Contoh: Bab 11">
+      </div>
+      <div class="form-group">
+        <label>Judul Materi</label>
+        <input type="text" id="mJudul" class="form-control" placeholder="Contoh: Mengenal Nilai Tempat">
+      </div>
+      <div class="form-group">
+        <label>Ikon Emoji</label>
+        <input type="text" id="mIcon" class="form-control" value="📘">
+      </div>
+      <div class="form-group">
+        <label>Deskripsi Singkat</label>
+        <input type="text" id="mDesc" class="form-control" placeholder="Ringkasan materi pada kartu">
+      </div>
+      <div class="form-group">
+        <label>Tujuan Pembelajaran (pisahkan per baris)</label>
+        <textarea id="mTujuan" rows="2" class="form-control" placeholder="Memahami nilai tempat puluhan dan satuan"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Isi Konten Materi</label>
+        <textarea id="mKonten" rows="4" class="form-control" placeholder="Tuliskan penjelasan materi di sini..."></textarea>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+        <button class="back-btn" style="margin:0" onclick="closeModal()">Batal</button>
+        <button class="btn btn-green" onclick="saveNewMateri()">💾 Simpan Materi</button>
+      </div>
+    </div>
+  `;
+}
+
+function saveNewMateri() {
+  const bab = document.getElementById('mBab').value.trim();
+  const judul = document.getElementById('mJudul').value.trim();
+  const icon = document.getElementById('mIcon').value.trim() || '📘';
+  const desc = document.getElementById('mDesc').value.trim();
+  const tujuanRaw = document.getElementById('mTujuan').value.trim();
+  const kontenRaw = document.getElementById('mKonten').value.trim();
+
+  if (!bab || !judul || !desc) {
+    showToast('Harap isi Nomor Bab, Judul, dan Deskripsi!', '#ef4444');
+    return;
+  }
+
+  const tujuan = tujuanRaw ? tujuanRaw.split('\n').map(x => x.trim()).filter(Boolean) : [desc];
+  MATERIS.push({
+    id: Date.now(),
+    bab,
+    judul,
+    icon,
+    warna: '#6366f1',
+    desc,
+    tujuan,
+    konten: `<h3>📖 Penjelasan Materi</h3><p>${kontenRaw || desc}</p>`
+  });
+
+  saveAll();
+  closeModal();
+  renderGuruBar();
+  renderContent();
+  showToast('Materi baru berhasil ditambahkan!');
+}
+
+function deleteMateri(id) {
+  MATERIS = MATERIS.filter(m => m.id !== id);
+  saveAll();
+  renderGuruBar();
+  renderContent();
+  showToast('Materi berhasil dihapus.', '#f59e0b');
+}
+
+function openAddSoalModal() {
+  const mc = document.getElementById('modalContainer');
+  mc.className = 'modal-overlay';
+  mc.innerHTML = `
+    <div class="modal">
+      <h3 style="margin-bottom:14px;">📝 Tambah Soal Kuis Baru</h3>
+      <div class="form-group">
+        <label>Pilih Paket Kuis Materi</label>
+        <select id="sMateriId" class="form-control">
+          ${QUIZ_BANKS.map(qb => `<option value="${qb.materiId}">${qb.judul}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Pertanyaan Soal</label>
+        <textarea id="sPertanyaan" rows="2" class="form-control" placeholder="Contoh: Berapa hasil 4 + 5 ?"></textarea>
+      </div>
+      <div class="form-group"><label>Pilihan A</label><input type="text" id="sOpA" class="form-control"></div>
+      <div class="form-group"><label>Pilihan B</label><input type="text" id="sOpB" class="form-control"></div>
+      <div class="form-group"><label>Pilihan C</label><input type="text" id="sOpC" class="form-control"></div>
+      <div class="form-group"><label>Pilihan D</label><input type="text" id="sOpD" class="form-control"></div>
+      <div class="form-group">
+        <label>Kunci Jawaban Benar</label>
+        <select id="sKunci" class="form-control">
+          <option value="0">Pilihan A</option>
+          <option value="1">Pilihan B</option>
+          <option value="2">Pilihan C</option>
+          <option value="3">Pilihan D</option>
+        </select>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+        <button class="back-btn" style="margin:0" onclick="closeModal()">Batal</button>
+        <button class="btn btn-green" onclick="saveNewSoal()">💾 Simpan Soal</button>
+      </div>
+    </div>
+  `;
+}
+
+function saveNewSoal() {
+  const materiId = Number(document.getElementById('sMateriId').value);
+  const q = document.getElementById('sPertanyaan').value.trim();
+  const ops = [
+    document.getElementById('sOpA').value.trim(),
+    document.getElementById('sOpB').value.trim(),
+    document.getElementById('sOpC').value.trim(),
+    document.getElementById('sOpD').value.trim()
+  ];
+  const a = Number(document.getElementById('sKunci').value);
+
+  if (!q || ops.some(x => !x)) {
+    showToast('Semua kolom pertanyaan dan pilihan harus diisi!', '#ef4444');
+    return;
+  }
+
+  const targetBank = QUIZ_BANKS.find(qb => qb.materiId === materiId);
+  if (targetBank) {
+    targetBank.soal.push({ q, ops, a });
+    saveAll();
+    closeModal();
+    if (activeTab === 'kuis') renderContent();
+    showToast('Soal kuis baru berhasil ditambahkan!');
+  }
+}
+
+function closeModal() {
+  const mc = document.getElementById('modalContainer');
+  mc.className = 'hidden';
+  mc.innerHTML = '';
+}
+
+window.onload = renderApp;
+</script>
+</body>
+</html>
